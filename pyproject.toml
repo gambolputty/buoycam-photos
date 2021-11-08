@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "buoycam-photos"
+version = "0.1.0"
+description = "A Python module to download buoy photos from the National Data Buoy Center (NOAA)"
+authors = ["Gregor Weichbrodt <gregorweichbrodt@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+imageio = "^2.10.3"
+fastkml = "^0.12"
+autopep8 = "^1.6.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
