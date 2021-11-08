@@ -3,9 +3,10 @@ from pathlib import Path
 import requests
 from fastkml import kml
 
+PACKAGE_PATH = Path.cwd()
 STATIONS_KML_FILE_URL = 'https://www.ndbc.noaa.gov/kml/buoycams_as_kml.php' # is inside https://www.ndbc.noaa.gov/kml/buoycams.kml
-STATIONS_KML_FILE_PATH = Path('buoycam_photos/tmp/stations.kml')
-STATIONS_NAMES_FILE_PATH = Path('buoycam_photos/output/stations.txt')
+STATIONS_KML_FILE_PATH = PACKAGE_PATH.joinpath('buoycam_photos/tmp/stations.kml')
+STATIONS_NAMES_FILE_PATH = PACKAGE_PATH.joinpath('buoycam_photos/output/stations.txt')
 
 def parse_stations(kml_document):
     placemarks = list(list(list(kml_document.features())[0].features())[0].features())
