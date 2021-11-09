@@ -1,4 +1,4 @@
-from typing import List, Literal, Tuple, Union
+from typing import Tuple, Union
 import requests
 from io import BytesIO
 from PIL import Image, ImageStat
