@@ -1,7 +1,8 @@
-from typing import Tuple, Union
+from typing import List, Tuple, Union
 import requests
 from io import BytesIO
 from PIL import Image, ImageStat
+from PIL.Image import Image as ImageType
 
 """
 To view the most recent BuoyCAM image from an NDBC station, use this URL:
@@ -16,20 +17,20 @@ All cams: https://www.ndbc.noaa.gov/buoycams.shtml
 DEBUG = False
 
 
-def get_cam_photo(station_name: str) -> Image:
+def get_cam_photo(station_name: str) -> ImageType:
     station_image_url = f'https://www.ndbc.noaa.gov/buoycam.php?station={station_name}'
     response = requests.get(station_image_url)
     return Image.open(BytesIO(response.content))
 
 
-def get_image_brigthness(img: Image) -> int:
+def get_image_brigthness(img: ImageType) -> int:
     # Source: https://newbedev.com/what-are-some-methods-to-analyze-image-brightness-using-python
     im = img.convert('L')
     stat = ImageStat.Stat(im)
     return stat.rms[0]
 
 
-def crop_cam_photo(img: Image):
+def crop_cam_photo(img: ImageType) -> List[ImageType]:
     """
     Crop image into six pieces.
     Exclude lower black border and images that are too dark.
@@ -66,14 +67,9 @@ def crop_cam_photo(img: Image):
     return result
 
 
-def get_station_images(name: str, scale: Union[None, Tuple[int, int]] = (540, 304)):
+def get_station_images(name: str) -> List[ImageType]:
     img = get_cam_photo(name)
-    cropped_images = crop_cam_photo(img)
-
-    if scale:
-        result = [new_img.resize(scale, Image.ANTIALIAS) for new_img in cropped_images]
-    else:
-        result = cropped_images
+    result = crop_cam_photo(img)
 
     if DEBUG:
         img.save(f'./buoycam_photos/test.jpg')

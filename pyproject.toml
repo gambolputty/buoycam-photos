@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "buoycam-photos"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Python module to download buoy photos from the National Data Buoy Center (NOAA)"
 authors = ["Gregor Weichbrodt <gregorweichbrodt@gmail.com>"]
 
