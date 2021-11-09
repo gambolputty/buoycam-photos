@@ -6,11 +6,11 @@ authors = ["Gregor Weichbrodt <gregorweichbrodt@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-imageio = "^2.10.3"
 fastkml = "^0.12"
 autopep8 = "^1.6.0"
 requests = "^2.26.0"
 lxml = "^4.6.4"
+imageio = "^2.10.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

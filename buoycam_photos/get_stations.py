@@ -1,43 +1,25 @@
-from pathlib import Path
+from typing import List
 
 import requests
 from fastkml import kml
 
-PACKAGE_PATH = Path.cwd()
 STATIONS_KML_FILE_URL = 'https://www.ndbc.noaa.gov/kml/buoycams_as_kml.php' # is inside https://www.ndbc.noaa.gov/kml/buoycams.kml
-STATIONS_KML_FILE_PATH = PACKAGE_PATH.joinpath('buoycam_photos/tmp/stations.kml')
-STATIONS_NAMES_FILE_PATH = PACKAGE_PATH.joinpath('buoycam_photos/output/stations.txt')
 
-def parse_stations(kml_document):
-    placemarks = list(list(list(kml_document.features())[0].features())[0].features())
-    result = []
+def parse_stations(kml_document: kml.KML) -> List[str]:
+    placemarks: List[kml.Placemark] = list(list(list(kml_document.features())[0].features())[0].features())
+    return [placemark.name for placemark in placemarks]
 
-    for placemark in placemarks:
-        result.append(placemark.name)
-
-    return result
-
-def get_stations():
-    # download latest station file
-    # open in binary mode
-    with open(STATIONS_KML_FILE_PATH, 'w+b') as file:
-        # get request
-        response = requests.get(STATIONS_KML_FILE_URL)
-        # write to file
-        file.write(response.content)
-
-    # read kml file
-    with open(STATIONS_KML_FILE_PATH, 'rt', encoding='utf-8') as file:
-        doc=file.read()
+def get_stations() -> List[str]:
+    # download latest station file content
+    response = requests.get(STATIONS_KML_FILE_URL)
+    doc = response.content
 
     # parse stations
     k = kml.KML()
-    k.from_string(doc.encode('utf-8')) # fix encoding error https://github.com/cleder/fastkml/issues/57
+    k.from_string(doc)
     stations = parse_stations(k)
 
-    # write csv
-    with open(STATIONS_NAMES_FILE_PATH, 'w') as file:
-        file.write(','.join(stations))
-        print(f'Saved {len(stations)} stations to csv file')
+    return stations
 
-    return True
+if __name__ == '__main__':
+    get_stations()
