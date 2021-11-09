@@ -14,7 +14,7 @@ All cams: https://www.ndbc.noaa.gov/buoycams.shtml
 
 """
 
-DEBUG = False
+DEBUG = True
 
 
 def get_cam_photo(station_name: str) -> ImageType:
@@ -51,9 +51,15 @@ def crop_cam_photo(img: ImageType) -> List[ImageType]:
     for index, box in enumerate(all_boxes):
         new_img = img.crop(box)
         brightness = get_image_brigthness(new_img)
+        color_count = len(new_img.getcolors(new_img.size[0]*new_img.size[1]))
 
         if DEBUG:
-            print(f'{index}, {brightness}')
+            print(f'{index + 1}, {brightness}, {color_count}')
+
+        if color_count < 2000:
+            # image has not enough colors
+            # probably black & white error image
+            continue
 
         if brightness > 180:
             # image is too bright
@@ -74,10 +80,10 @@ def get_station_images(name: str) -> List[ImageType]:
     if DEBUG:
         img.save(f'./buoycam_photos/test.jpg')
         for index, new_img in enumerate(result):
-            new_img.save(f'./buoycam_photos/test_{index}.jpg')
+            new_img.save(f'./buoycam_photos/test_{index + 1}.jpg')
 
     return result
 
 
 if __name__ == '__main__':
-    get_station_images('42035')
+    get_station_images('46085')
