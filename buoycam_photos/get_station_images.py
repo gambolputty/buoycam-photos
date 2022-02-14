@@ -14,7 +14,7 @@ All cams: https://www.ndbc.noaa.gov/buoycams.shtml
 
 """
 
-DEBUG = True
+DEBUG = False
 
 
 def get_cam_photo(station_name: str) -> ImageType:
