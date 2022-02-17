@@ -15,6 +15,7 @@ All cams: https://www.ndbc.noaa.gov/buoycams.shtml
 """
 
 DEBUG = False
+WANTED_SIZE = 2880, 300
 
 
 def get_cam_photo(station_name: str) -> ImageType:
@@ -75,6 +76,11 @@ def crop_cam_photo(img: ImageType) -> List[ImageType]:
 
 def get_station_images(name: str) -> List[ImageType]:
     img = get_cam_photo(name)
+
+    # check image size
+    if img.size != WANTED_SIZE:
+        return []
+
     result = crop_cam_photo(img)
 
     if DEBUG:
@@ -86,4 +92,4 @@ def get_station_images(name: str) -> List[ImageType]:
 
 
 if __name__ == '__main__':
-    get_station_images('46085')
+    get_cam_photo('41049')
