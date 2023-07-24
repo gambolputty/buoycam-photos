@@ -2,13 +2,13 @@
 authors = ["Gregor Weichbrodt <gregorweichbrodt@gmail.com>"]
 description = "A Python module to download buoy photos from the National Data Buoy Center (NOAA)"
 name = "buoycam-photos"
-version = "0.1.5"
+version = "0.1.6"
 
 [tool.poetry.dependencies]
 Pillow = "^8.4.0"
 autopep8 = "^1.6.0"
 fastkml = "^0.12"
-lxml = "^4.6.4"
+lxml = "4.9.3"
 python = "^3.8"
 requests = "^2.26.0"
 
