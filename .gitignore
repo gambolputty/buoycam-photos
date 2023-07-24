@@ -1,3 +1,4 @@
 .venv
 *.pyc
 buoycam_photos/tmp/*
+.DS_Store
